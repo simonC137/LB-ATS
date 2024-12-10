@@ -74,7 +74,7 @@ Refactor: refactor/description
 
 #### Examples: 
 
-Create a new branch based on the development branch using the appropriate prefix:
+Create a new branch based on the development branch using the appropriate prefix, note that your username should come at the front of the branch name (see below linear docs):
 ```
 git checkout -b feature/add-new-like-button
 ```
@@ -104,6 +104,22 @@ git commit -m "feature: add comments section"
 - Push your branch to the remote repository and create a pull request (PR) to merge into the `development` branch.
 - Request a review from a teammember.
 - After review and approval, the branch will be merged into development.
+
+#### Linear Issues
+
+1. Select or create the issue you want to work on next.
+
+2. Open the command menu (`Cmd` `K` on Mac, or `Ctrl` `K` on Windows) and select Copy git branch name, or use the shortcut Cmd/Ctrl Shift .
+
+3. This will copy the git branch name to your clipboard (e.g. `username/LIN-123-github-workflow`)
+
+4. Paste the branch name to your git checkout command to create a new branch: `git checkout -b username/LIN-123-github-workflow`
+
+5. Make your changes and push the branch to GitHub and open a pull request
+
+6. Once the pull request is open, Linear will comment on the PR and change the issue state to In Progress. 
+
+7. Once the PR merged, Linear will change the status to Done.
 
 ## Testing
 Testing procedures will be outlined in more detail at a later date.
