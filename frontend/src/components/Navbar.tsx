@@ -9,7 +9,22 @@ const Navbar = () => {
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
           {/* Navbar */}
-          <div className="navbar  w-full ">
+          <div className="navbar flex justify-between items-center w-full ">
+            <div className="mx-2 flex-1  px-2 cursor-pointer">
+              <Link to="/">
+                <img className="w-10" src={logo} alt="logo image here" />
+              </Link>
+            </div>
+            <div className="hidden flex-none lg:block">
+              <ul className="menu menu-horizontal">
+                {menus.map((menu) => (
+                  <li key={menu.name}>
+                    <Link to={menu.route}>{menu.name} </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             <div className="flex-none lg:hidden">
               <label
                 htmlFor="my-drawer-3"
@@ -30,20 +45,6 @@ const Navbar = () => {
                   ></path>
                 </svg>
               </label>
-            </div>
-            <div className="mx-2 flex-1  px-2 cursor-pointer">
-              <Link to="/">
-                <img className="w-10" src={logo} alt="logo image here" />
-              </Link>
-            </div>
-            <div className="hidden flex-none lg:block">
-              <ul className="menu menu-horizontal">
-                {menus.map((menu) => (
-                  <li key={menu.name}>
-                    <Link to={menu.route}>{menu.name} </Link>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
