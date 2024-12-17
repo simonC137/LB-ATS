@@ -4,12 +4,20 @@ const mongoose = require('mongoose');
 const Candidate = require('./models/candidate_model');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
+const candidateRoutes = require('./routes/candidates');
+const jobsRoutes = require('./routes/save_job');
+
+
 
 const app = express();
 // app.use(bodyParser.json());
 app.use(express.json());
 
 app.use('/auth',authRoutes)
+app.use('/candidate',candidateRoutes)
+app.use('/save',jobsRoutes)
+
+
 // Middleware
 
 // Connect to MongoDB
