@@ -75,3 +75,5 @@ We have received your application and will get back to you with more information
     res.status(500).json({ error: error.message });
   }
 });
+
+module.exports = router;

@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const candidateRoutes = require('./routes/candidates');
 const jobsRoutes = require('./routes/save_job');
+const cleanRejectedRoute = require('./routes/db_cleanup');
 
 
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/auth',authRoutes)
 app.use('/candidate',candidateRoutes)
 app.use('/save',jobsRoutes)
+app.use('/delete', cleanRejectedRoute);
 
 
 // Middleware
