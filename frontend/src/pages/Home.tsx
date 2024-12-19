@@ -1,8 +1,8 @@
 import React from 'react';
-import HomePage from '../components/HomePage';
+import HeroSection from '../components/HeroSection';
 const Home = () => {
   return (
-    <HomePage/>
+    <HeroSection/>
   );
 };
 
