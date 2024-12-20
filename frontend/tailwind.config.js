@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         jost: ['Jost', 'sans-serif'], // Added Jost font here
       },
+      colors: {
+        'custom-blue': '#67B6D5',
+      },
     },
   },
   plugins: [require('daisyui')],
