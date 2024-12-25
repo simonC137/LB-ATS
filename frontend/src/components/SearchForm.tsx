@@ -2,7 +2,7 @@ import React from 'react';
 
 const SearchForm: React.FC = () => {
   return (
-    <form className="max-w-xl mx-auto -ml-2">
+    <form className="max-w-xl mx-auto  lg:-mx-2 lg:px-0 px-4 ">
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -11,7 +11,6 @@ const SearchForm: React.FC = () => {
       </label>
       <div className="relative flex items-center">
         <div className="absolute inset-y-0 left-0 flex items-center ps-3 pointer-events-none">
-         
           <svg
             className="w-4 h-4 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
@@ -37,7 +36,7 @@ const SearchForm: React.FC = () => {
         />
         <button
           type="submit"
-          className="text-white absolute right-2.5 top-1/2 transform -translate-y-1/2 bg-orange-600 hover:bg-custom-blue focus:ring-4 focus:outline-none focus:custom-blue font-medium rounded-lg text-sm px-4 py-2 dark:bg-custom-blue dark:hover:bg- dark:focus:ring-custom-blue" 
+          className="text-white absolute right-2.5 top-1/2 transform -translate-y-1/2 bg-orange-600 hover:bg-custom-blue focus:ring-4 focus:outline-none focus:custom-blue font-medium rounded-lg text-sm px-4 py-2 dark:bg-custom-blue dark:hover:bg- dark:focus:ring-custom-blue"
         >
           Search
         </button>

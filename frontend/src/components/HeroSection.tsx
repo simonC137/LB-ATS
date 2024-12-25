@@ -8,8 +8,8 @@ import SearchForm from './SearchForm';
  */
 const HeroSection: React.FC = () => {
   return (
-    <section className="hero w-full min-h-[70vh] bg-white shadow-md border-b border-slate-100 mb-12">
-      <div className="flex flex-col lg:flex-row-reverse items-center justify-center w-full h-full">
+    <section className="hero min-h-[80vh] bg-white border-b border-slate-100 mb-12">
+      <div className="container mx-auto flex flex-col lg:flex-row-reverse items-center justify-center">
         {/* Hero image only displayed on large screens */}
         <img
           src={hero}
@@ -17,9 +17,9 @@ const HeroSection: React.FC = () => {
           alt="A working class lady with hands folded"
         />
         <div className="text-center lg:text-left leading-8">
-          <h1 className="text-5xl font-semibold mb-2">
-            There Are <span className="text-orange-600">300</span> Postings
-            Here <br />
+          <h1 className="text-5xl font-semibold mb-2 sm:mt-6">
+            There Are <span className="text-orange-600">300</span> Postings Here{' '}
+            <br />
             <span className="block">For You!</span>
           </h1>
           <p className="py-4 text-sm text-gray-600 mb-5">

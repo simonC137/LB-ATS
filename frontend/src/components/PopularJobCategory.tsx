@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FaLaptopCode, // For Software Development
   FaClipboardCheck, // For Product Management
@@ -10,7 +11,23 @@ import {
   FaBullhorn, // For Sales and Marketing
 } from 'react-icons/fa';
 
-const categories = [
+
+// Define the Category interface
+interface Category {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  employment_type: string;
+  department: string;
+  posted_date: string | number;
+  closing_date: string | number;
+  positions: string;
+  icon: React.ReactNode; 
+}
+
+
+const categories: Category[] = [
   {
     id: 1,
     title: 'Software Development',
@@ -119,11 +136,18 @@ const categories = [
     positions: '20 open positions',
     icon: <FaBullhorn />,
   },
+  
 ];
 
+/**
+ * PopularJobCategories component renders a list of popular job categories.
+ * Each category is a `li` element with a title, positions, and an icon.
+ * The component also displays a heading and a paragraph above the list.
+ * @returns {ReactElement} The PopularJobCategories component.
+ */
 export default function PopularJobCategories() {
   return (
-    <main className="max-w-7xl mx-auto pt-16 py-10">
+    <main className="max-w-7xl mx-auto pt-16 py-10 px-4 sm:px-6">
       <h2 className="text-2xl font-bold text-center mb-4">
         Popular Job Categories
       </h2>
@@ -131,12 +155,11 @@ export default function PopularJobCategories() {
         2024 jobs live - 10 added today.
       </p>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {categories.map(({ title, positions, icon }, index) => (
+        {categories.map(({ title, positions, icon, id }) => (
           <li
-            key={index}
+            key={id}
             className="flex items-center p-6 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow"
           >
-            {/* Apply hover effects to the div containing the icon */}
             <div className="flex items-center justify-center text-blue-500 text-2xl p-2 bg-blue-50 border border-gray-400 rounded-md transition-all duration-300 mr-6 hover:bg-orange-600 hover:text-white">
               {icon}
             </div>
