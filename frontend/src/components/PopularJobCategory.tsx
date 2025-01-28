@@ -147,10 +147,10 @@ const categories: Category[] = [
  */
 export default function PopularJobCategories() {
   return (
-    <main className="max-w-7xl mx-auto pt-16 py-10 px-4 sm:px-6">
-      <h2 className="text-2xl font-bold text-center mb-4">
+    <main className="max-w-7xl mx-auto pt-16 py-10 px-4 sm:px-6 mb-16">
+      <h3 className="text-2xl font-medium text-center mb-4">
         Popular Job Categories
-      </h2>
+      </h3>
       <p className="text-center text-gray-500 mb-12">
         2024 jobs live - 10 added today.
       </p>
@@ -158,14 +158,14 @@ export default function PopularJobCategories() {
         {categories.map(({ title, positions, icon, id }) => (
           <li
             key={id}
-            className="flex items-center p-6 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            className="flex items-center p-6 border border-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow"
           >
-            <div className="flex items-center justify-center text-blue-500 text-2xl p-2 bg-blue-50 border border-gray-400 rounded-md transition-all duration-300 mr-6 hover:bg-orange-600 hover:text-white">
+            <div className="flex items-center justify-center text-white text-2xl p-2 bg-gray-700 border border-gray-400 rounded-md transition-all duration-300 mr-6 hover:bg-orange-600 hover:text-white">
               {icon}
             </div>
             <div>
-              <h3 className="text-xl font-medium">{title}</h3>
-              <p className="text-base text-gray-500">{positions}</p>
+              <h5 className="text-l font-medium">{title}</h5>
+              <p className="text-sm text-gray-500">{positions}</p>
             </div>
           </li>
         ))}
