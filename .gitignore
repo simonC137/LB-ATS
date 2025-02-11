@@ -52,3 +52,4 @@ Thumbs.db
 # Temporary files
 temp/
 .cache/
+.nvmrc
