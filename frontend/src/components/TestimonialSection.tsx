@@ -46,9 +46,10 @@ const TestimonialSection = () => {
   return (
     <section className="py-20 bg-gray-100">
       {' '}
-     
       <div className="max-w-6xl mx-auto px-4">
-        <h3 className="text-2xl font-medium text-center mb-4">Testimonials From Our Customers</h3>
+        <h3 className="text-2xl font-medium text-center mb-4">
+          Testimonials From Our Customers
+        </h3>
         <p className="text-center text-gray-500 mb-8">
           What our clients say about us
         </p>
@@ -66,8 +67,7 @@ const TestimonialSection = () => {
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index} className="flex justify-center">
               <div
-                className={`bg-white shadow-lg rounded-lg p-8 h-96 transform transition duration-500 ${
-                
+                className={`bg-white shadow-lg rounded-lg p-8  transform transition duration-500 ${
                   index === activeSlide ? 'scale-110 opacity-100' : 'opacity-70'
                 }`}
               >
@@ -81,7 +81,7 @@ const TestimonialSection = () => {
                     alt={testimonial.name}
                     width={60}
                     height={60}
-                    className="rounded-full object-cover" 
+                    className="rounded-full object-cover"
                   />
                   <div className="ml-3">
                     <p className="font-semibold">{testimonial.name}</p>

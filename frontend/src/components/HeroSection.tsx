@@ -1,8 +1,6 @@
 import React from 'react';
 import hero from '../assets/heroImage/hero.png';
 import SearchForm from './SearchForm';
-import TestimonialSection from './TestimonialSection';
-import PopularJobCategories from './PopularJobCategory';
 
 /**
  * HeroSection component renders the hero section of the page.
@@ -34,8 +32,6 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
       </section>
-      <PopularJobCategories />
-      <TestimonialSection />
     </>
   );
 };
