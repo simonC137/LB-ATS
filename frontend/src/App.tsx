@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import JobDetails from './pages/JobDetails';
 import RegisterUser from './components/RegisterUser';
+import BlogDetails from './pages/BlogDetails';
 
 function App() {
   const location = useLocation();
@@ -25,7 +26,8 @@ function App() {
         <Route path="find-jobs" element={<FindJobs />}></Route>
         <Route path="blog" element={<Blog />}></Route>
         <Route path="contact" element={<Contact />}></Route>
-        <Route path="/jobdetail/:id" element={<JobDetails />}></Route>
+        <Route path="/jobDetail/:id" element={<JobDetails />}></Route>
+        <Route path="/blogDetail/:id" element={<BlogDetails />}></Route>
         <Route path="/register-user" element={<RegisterUser />}></Route>
       </Routes>
       {!excludedRoutes.includes(location.pathname) && <Footer />}

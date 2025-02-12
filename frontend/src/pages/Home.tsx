@@ -1,3 +1,4 @@
+import BlogArticles from '../components/BlogArticlesList';
 import FeaturedJob from '../components/FeaturedJob';
 import HeroSection from '../components/HeroSection';
 import PopularJobCategories from '../components/PopularJobCategory';
@@ -10,6 +11,7 @@ const Home = () => {
       <PopularJobCategories />
       <FeaturedJob />
       <TestimonialSection />
+      <BlogArticles />
     </>
   );
 };

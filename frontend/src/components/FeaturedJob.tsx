@@ -16,7 +16,7 @@ const FeaturedJob = () => {
   const navigate = useNavigate();
 
   const jobDetailsHandler = (id: number): void => {
-    navigate(`/jobdetail/${id}`);
+    navigate(`/jobDetail/${id}`);
   };
 
   return (
