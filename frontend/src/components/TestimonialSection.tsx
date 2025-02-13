@@ -1,8 +1,9 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import 'swiper/swiper-bundle.css'; // Import all styles
-import 'swiper/css/navigation'; // Import navigation styles
+import { Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
+
+import TestimonialCard from './TestimonialCard';
 import { useState } from 'react';
 
 const testimonials = [
@@ -45,50 +46,36 @@ const TestimonialSection = () => {
 
   return (
     <section className="py-20 bg-gray-100">
-      {' '}
-     
-      <div className="max-w-6xl mx-auto px-4">
-        <h3 className="text-2xl font-medium text-center mb-4">Testimonials From Our Customers</h3>
+      <div className="max-w-6xl mx-auto px-6 md:px-8">
+        <h3 className="text-2xl font-medium text-center mb-4">
+          Testimonials From Our Customers
+        </h3>
         <p className="text-center text-gray-500 mb-8">
           What our clients say about us
         </p>
 
         <Swiper
-          spaceBetween={50}
-          slidesPerView={3}
-          centeredSlides
+          className="w-full"
+          spaceBetween={30}
+          slidesPerView={1}
+          centeredSlides={true}
           loop={true}
-          autoplay={{ delay: 5000 }}
-          pagination={{ clickable: true }}
-          modules={[Pagination]}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          pagination={{ clickable: true, dynamicBullets: true }}
+          modules={[Pagination, Autoplay]}
           onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
+          breakpoints={{
+            320: { slidesPerView: 1, spaceBetween: 10, centeredSlides: true }, // Mobile
+            640: { slidesPerView: 2, spaceBetween: 20, centeredSlides: false }, // Tablet
+            1024: { slidesPerView: 3, spaceBetween: 30, centeredSlides: true }, // Desktop
+          }}
         >
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index} className="flex justify-center">
-              <div
-                className={`bg-white shadow-lg rounded-lg p-8 h-96 transform transition duration-500 ${
-                
-                  index === activeSlide ? 'scale-110 opacity-100' : 'opacity-70'
-                }`}
-              >
-                <h3 className="text-orange-600 font-semibold">
-                  {testimonial.title}
-                </h3>
-                <p className="text-gray-700 mt-2">{testimonial.message}</p>
-                <div className="flex items-center mt-4">
-                  <img
-                    src={testimonial.photo}
-                    alt={testimonial.name}
-                    width={60}
-                    height={60}
-                    className="rounded-full object-cover" 
-                  />
-                  <div className="ml-3">
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500">{testimonial.job}</p>
-                  </div>
-                </div>
-              </div>
+              <TestimonialCard
+                testimonial={testimonial}
+                isActive={index === activeSlide}
+              />
             </SwiperSlide>
           ))}
         </Swiper>
