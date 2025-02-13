@@ -11,7 +11,6 @@ import {
   FaBullhorn, // For Sales and Marketing
 } from 'react-icons/fa';
 
-
 // Define the Category interface
 interface Category {
   id: number;
@@ -23,9 +22,8 @@ interface Category {
   posted_date: string | number;
   closing_date: string | number;
   positions: string;
-  icon: React.ReactNode; 
+  icon: React.ReactNode;
 }
-
 
 const categories: Category[] = [
   {
@@ -136,15 +134,8 @@ const categories: Category[] = [
     positions: '20 open positions',
     icon: <FaBullhorn />,
   },
-  
 ];
 
-/**
- * PopularJobCategories component renders a list of popular job categories.
- * Each category is a `li` element with a title, positions, and an icon.
- * The component also displays a heading and a paragraph above the list.
- * @returns {ReactElement} The PopularJobCategories component.
- */
 export default function PopularJobCategories() {
   return (
     <main className="max-w-7xl mx-auto pt-16 py-10 px-4 sm:px-6 mb-16">
