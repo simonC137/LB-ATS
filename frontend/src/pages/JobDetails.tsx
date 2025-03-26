@@ -22,19 +22,19 @@ const JobDetails = () => {
             {jobDetail?.title}
           </h1>
           {/* <div className="my-3 "> */}
-          {jobDetail?.jobtype.map((type, i) => (
-            <span key={i} className={` py-1 text-lg  rounded-full mx-1 }`}>
+          {jobDetail?.location.map((type, i) => (
+            <div key={i} className={` py-1 text-lg  rounded-full mx-1 }`}>
               {type}
-            </span>
+            </div>
           ))}
           {/* </div> */}
         </div>
       </div>
-      <div className="border-t-2 border-b-2   mt-4">
+      {/* <div className="border-t-2 border-b-2   mt-4">
         <p className="sm:my-5 my-2 p-5">
           Salary <span className="font-semibold ">{jobDetail?.salary}</span>
         </p>
-      </div>
+      </div> */}
       <div className="mt-5 p-5">
         <p>{jobDetail?.description}</p>
       </div>

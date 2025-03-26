@@ -26,26 +26,25 @@ const FeaturedJob = () => {
         Know your worth and find the job that qualify your life
       </p>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-5 gap-8">
-        {featuredJobs.map(({ title, jobtype, icon: Icon, id }, index) => (
+        {featuredJobs.map(({ title, location, id }, index) => (
           <li
             key={index}
             className="flex items-center cursor-pointer p-6 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow"
             onClick={() => jobDetailsHandler(id)}
           >
-            <div className="flex items-center justify-center text-blue-500 text-2xl p-2 bg-blue-50 border border-gray-400 rounded-md transition-all duration-300 mr-6 hover:bg-orange-600 hover:text-white">
+            {/* <div className="flex items-center justify-center text-blue-500 text-2xl p-2 bg-blue-50 border border-gray-400 rounded-md transition-all duration-300 mr-6 hover:bg-orange-600 hover:text-white">
               <Icon />
-            </div>
+            </div> */}
             <div>
               <h3 className="text-lg font-medium">{title}</h3>
 
-              <div className="my-3 ">
-                {jobtype.map((type, i) => (
-                  <span
-                    key={i}
-                    className={`px-3 py-1 text-sm font-medium rounded-full mx-1 ${jobTypeColors[type]}`}
-                  >
-                    {type}
-                  </span>
+              <div className="my-3 w-full flex gap-2 items-center flex-wrap">
+                {location.map((type, i) => (
+                  <div key={i} className={` ${jobTypeColors[type]}`}>
+                    <p className="px-3 py-1 text-sm font-medium  w-20 rounded-full mx-1">
+                      {type}
+                    </p>
+                  </div>
                 ))}
               </div>
             </div>
