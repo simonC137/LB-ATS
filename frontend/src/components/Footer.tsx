@@ -2,7 +2,7 @@ import logo from '../assets/logo/logo-lifebonder.png';
 
 const Footer = () => {
   return (
-    <footer className="footer bg-orange-400 text-white p-10">
+    <footer className="footer bg-gray-700 text-white p-10">
       <aside>
         <img className="w-10" src={logo} alt="company logo here" />
         <p className="text-2xl">LifeBonder.</p>

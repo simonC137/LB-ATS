@@ -103,15 +103,15 @@ const BlogArticles: React.FC = () => {
                       {tag}
                     </span>
                   ))}
-                  <button
-                    onClick={() => {
-                      blogDetailsHandler(blog.id);
-                    }}
-                    className="py-2 btn btn-sm my-4 bg-orange-400 text-black border-none hover:bg-orange-500"
-                  >
-                    Read More
-                  </button>
                 </div>
+                <button
+                  onClick={() => {
+                    blogDetailsHandler(blog.id);
+                  }}
+                  className="py-2 btn btn-sm my-4 bg-orange-400 text-black border-none hover:bg-orange-500"
+                >
+                  Read More
+                </button>
               </div>
             </div>
           ))}

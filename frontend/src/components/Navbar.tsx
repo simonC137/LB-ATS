@@ -9,10 +9,10 @@ const Navbar = () => {
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col relative">
           {/* Navbar */}
-          <div className="navbar flex justify-between items-center bg-orange-400 fixed z-10 w-full ">
+          <div className="navbar flex justify-between items-center text-white bg-gray-700 fixed z-10 w-full ">
             <div className="mx-2 flex-1  px-2 cursor-pointer">
               <Link to="/">
-                <img className="w-10" src={logo} alt="logo image here" />
+                <img className="w-20" src={logo} alt="logo image here" />
               </Link>
             </div>
             <div className="hidden flex-none lg:block">

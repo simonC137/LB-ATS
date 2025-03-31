@@ -1,39 +1,21 @@
 import { useState } from 'react';
-import { Switch } from '@headlessui/react';
-import {
-  MapPinIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-} from '@heroicons/react/24/outline';
+// import { Switch } from '@headlessui/react';
+// import {
+//   MapPinIcon,
+//   PhoneIcon,
+//   EnvelopeIcon,
+// } from '@heroicons/react/24/outline';
 
 export default function ContactForm() {
   const [agreed, setAgreed] = useState(false);
 
   return (
     <>
-      <div className="bg-white min-h-[80vh] px-6 py-24 sm:py-32 lg:px-8">
+      <div className="bg-white  px-6 py-24 sm:py-32 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Contact Info Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 text-center gap-8 mb-10">
-            <div>
-              <MapPinIcon className="h-8 w-8 text-custom-blue mx-auto" />
-              <p className="font-semibold mt-2">Address</p>
-              <p className="text-gray-600 text-sm">
-                329 Queensberry Street, Copenhagen VIC 3051, Denmark.
-              </p>
-            </div>
-            <div>
-              <PhoneIcon className="h-8 w-8 text-custom-blue mx-auto" />
-              <p className="font-semibold mt-2">Call Us</p>
-              <p className="text-gray-600 text-sm">123 456 7890</p>
-            </div>
-            <div>
-              <EnvelopeIcon className="h-8 w-8 text-custom-blue mx-auto" />
-              <p className="font-semibold mt-2">Email</p>
-              <p className="text-gray-600 text-sm">
-                contact.lifebonder@example.com
-              </p>
-            </div>
+          <div className="text-center p-3">
+            <h1 className="text-2xl font-bold">Contact us</h1>
           </div>
 
           {/* Contact Form Section */}
@@ -107,7 +89,7 @@ export default function ContactForm() {
 
               {/* Toggle Switch */}
               <div className="flex items-center space-x-3 sm:col-span-2 mt-4">
-                <Switch
+                {/* <Switch
                   checked={agreed}
                   onChange={setAgreed}
                   className={`group flex w-8 flex-none cursor-pointer rounded-full p-px transition-colors duration-200 ease-in-out ${
@@ -120,7 +102,7 @@ export default function ContactForm() {
                       agreed ? 'translate-x-3.5' : 'translate-x-0'
                     }`}
                   />
-                </Switch>
+                </Switch> */}
                 <p className="text-sm text-gray-700">
                   By selecting this, you agree to our{' '}
                   <a href="#" className="font-semibold text-custom-blue">
@@ -145,6 +127,27 @@ export default function ContactForm() {
                 </button>
               </div>
             </form>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 text-center gap-8 mb-10">
+            <div>
+              {/* <MapPinIcon className="h-8 w-8 text-custom-blue mx-auto" /> */}
+              <p className="font-semibold mt-2">Address</p>
+              <p className="text-gray-600 text-sm">
+                329 Queensberry Street, Copenhagen VIC 3051, Denmark.
+              </p>
+            </div>
+            <div>
+              {/* <PhoneIcon className="h-8 w-8 text-custom-blue mx-auto" /> */}
+              <p className="font-semibold mt-2">Call Us</p>
+              <p className="text-gray-600 text-sm">123 456 7890</p>
+            </div>
+            <div>
+              {/* <EnvelopeIcon className="h-8 w-8 text-custom-blue mx-auto" /> */}
+              <p className="font-semibold mt-2">Email</p>
+              <p className="text-gray-600 text-sm">
+                contact.lifebonder@example.com
+              </p>
+            </div>
           </div>
         </div>
       </div>
