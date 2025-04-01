@@ -23,11 +23,11 @@ const Navbar = () => {
                   </li>
                 ))}
               </ul>
-              <Link target="_blank" to="/register-user">
+              {/* <Link target="_blank" to="/admin">
                 <button className="btn btn-sm bg-white hover:bg-gray-200">
                   Login
                 </button>
-              </Link>
+              </Link> */}
             </div>
 
             <div className="flex-none lg:hidden">
