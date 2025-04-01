@@ -14,7 +14,7 @@ import BlogDetails from './pages/BlogDetails';
 
 function App() {
   const location = useLocation();
-  const excludedRoutes = ['/register-user'];
+  const excludedRoutes = ['/admin'];
 
   console.log(location.pathname);
   return (
@@ -28,7 +28,7 @@ function App() {
         <Route path="contact" element={<Contact />}></Route>
         <Route path="/jobDetail/:id" element={<JobDetails />}></Route>
         <Route path="/blogDetail/:id" element={<BlogDetails />}></Route>
-        <Route path="/register-user" element={<RegisterUser />}></Route>
+        <Route path="/admin" element={<RegisterUser />}></Route>
       </Routes>
       {!excludedRoutes.includes(location.pathname) && <Footer />}
     </>
