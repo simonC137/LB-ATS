@@ -1,15 +1,22 @@
-function ContactFormPage() {
+import { FormEvent } from 'react';
+
+const ContactFormPage: React.FC = () => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // console.log('Form submitted!');
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
-      <div className=" sm:w-[700px]">
+      <div className="sm:w-[700px]">
         <h1 className="text-5xl font-bold text-center text-gray-800 mb-6">
           Contact Us
         </h1>
         <p className="text-center text-lg text-gray-600 mb-6">
-          For more information. Please complete this form.
+          For more information, please complete this form.
         </p>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-8">
             <label className="block text-md font-medium text-gray-700">
               Name*
@@ -18,6 +25,7 @@ function ContactFormPage() {
               type="text"
               className="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               placeholder="Full Name"
+              required
             />
           </div>
           <div className="mb-8">
@@ -28,6 +36,7 @@ function ContactFormPage() {
               type="email"
               className="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               placeholder="Your Email"
+              required
             />
           </div>
           <div className="mb-6">
@@ -53,6 +62,6 @@ function ContactFormPage() {
       </div>
     </div>
   );
-}
+};
 
 export default ContactFormPage;
