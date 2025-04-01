@@ -8,14 +8,14 @@ const RegisterUser = () => {
         <div className="w-full max-w-md">
           <form className="p-5 shadow-xl w-full mx-auto">
             <img className="w-44" src={formImage} alt="form image" />
-            <h1 className="text-2xl font-bold">Sign up and get on board</h1>
+            <h1 className="text-2xl font-bold">Welcome Admin</h1>
             <div className="grid grid-cols-1 gap-3">
-              <label className="input bg-white my-2 input-bordered flex items-center gap-2">
+              {/* <label className="input bg-white my-2 input-bordered flex items-center gap-2">
                 <input type="text" className="grow" placeholder="First Name" />
               </label>
               <label className="input bg-white my-2 input-bordered flex items-center gap-2">
                 <input type="text" className="grow" placeholder="Last Name" />
-              </label>
+              </label> */}
               <label className="input bg-white my-2 input-bordered flex items-center gap-2">
                 <input
                   type="email"
@@ -31,7 +31,7 @@ const RegisterUser = () => {
                 />
               </label>
             </div>
-            <div className="flex items-center gap-x-1">
+            {/* <div className="flex items-center gap-x-1">
               <input
                 type="checkbox"
                 className="checkbox checkbox-xs border border-black"
@@ -39,17 +39,17 @@ const RegisterUser = () => {
               <p className="">
                 I agree to the Terms and conditions of LifeBonder
               </p>
-            </div>
-            <div className="my-4">
+            </div> */}
+            {/* <div className="my-4">
               <p>
                 Got an account?{' '}
                 <span className="text-orange-400 cursor-pointer">
                   Log in here
                 </span>
               </p>
-            </div>
+            </div> */}
             <button className="w-full btn bg-orange-400 hover:bg-orange-500 border-none text-white">
-              Create Account
+              Login
             </button>
           </form>
         </div>
