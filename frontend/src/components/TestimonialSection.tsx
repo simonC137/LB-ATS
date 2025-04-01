@@ -72,10 +72,13 @@ const TestimonialSection = () => {
         >
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index} className="flex justify-center">
-              <TestimonialCard
-                testimonial={testimonial}
-                isActive={index === activeSlide}
-              />
+              <div className="w-full max-w-sm">
+        
+                <TestimonialCard
+                  testimonial={testimonial}
+                  isActive={index === activeSlide}
+                />
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
