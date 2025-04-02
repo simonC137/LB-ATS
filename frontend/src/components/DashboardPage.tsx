@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Card, { CardContent } from './uiCards/AdminCards';
+import Card, { CardContent } from './AdminCards/AdminCards';
 
 type Stats = {
   activeJobs: number;
