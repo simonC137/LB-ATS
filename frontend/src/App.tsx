@@ -56,7 +56,7 @@ import AdminPage from './pages/admin/AdminLogin';
 import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminLayout from './layouts/AdminLayout';
-import DashboardHome from './pages/admin/DashboardHome';
+import DashboardHome from './pages/admin/Dashboard';
 import Profile from './pages/admin/Profile';
 import Roles from './pages/admin/Roles';
 import AddJob from './pages/admin/Add-Job';

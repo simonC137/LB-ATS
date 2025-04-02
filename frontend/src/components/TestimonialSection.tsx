@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 
-import TestimonialCard from './TestimonialCard';
+import TestimonialCard from './uiCards/TestimonialCard';
 import { useState } from 'react';
 
 const testimonials = [

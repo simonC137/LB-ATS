@@ -76,13 +76,14 @@ const AddJobForm = () => {
                       <td>{job.jobTitle}</td>
                       <td>{job.location}</td>
                       <td className="flex gap-3">
-                        <button className="btn btn-sm text-white btn-info">
+                        <button title='View' className="btn btn-sm text-white btn-info">
                           <FaEye />
                         </button>
-                        <button className="btn btn-sm text-white btn-warning">
+                        <button title='Edit' className="btn btn-sm text-white btn-warning">
                           <FaEdit />
                         </button>
                         <button
+                          title='Delete'
                           onClick={() => handleDelete(job.id)}
                           className="btn btn-sm text-white btn-error"
                         >
@@ -116,6 +117,7 @@ const AddJobForm = () => {
                   <span className="label-text">Job Title</span>
                 </label>
                 <input
+                  title='Job Title'
                   type="text"
                   name="jobTitle"
                   value={formData.jobTitle}
@@ -130,6 +132,7 @@ const AddJobForm = () => {
                   <span className="label-text">Job Description</span>
                 </label>
                 <textarea
+                  title='Job Description'
                   name="jobDescription"
                   value={formData.jobDescription}
                   onChange={handleChange}
@@ -143,6 +146,7 @@ const AddJobForm = () => {
                   <span className="label-text">Location</span>
                 </label>
                 <input
+                  title='Location'
                   type="text"
                   name="location"
                   value={formData.location}

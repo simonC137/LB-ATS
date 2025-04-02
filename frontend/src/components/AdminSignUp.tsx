@@ -28,6 +28,7 @@ const AdminSignUp = () => {
                 <span className="label-text">First Name</span>
               </label>
               <input
+                title='First Name'
                 type="text"
                 name="firstName"
                 value={formData.firstName}
@@ -41,6 +42,7 @@ const AdminSignUp = () => {
                 <span className="label-text">Last Name</span>
               </label>
               <input
+                title='Last Name'
                 type="text"
                 name="lastName"
                 value={formData.lastName}
@@ -54,6 +56,7 @@ const AdminSignUp = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
+                title='Email'
                 type="email"
                 name="email"
                 value={formData.email}
@@ -67,6 +70,7 @@ const AdminSignUp = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
+              title='Password'
                 type="password"
                 name="password"
                 value={formData.password}
@@ -80,6 +84,7 @@ const AdminSignUp = () => {
                 <span className="label-text">Confirm Password</span>
               </label>
               <input
+                title='Confirm Password'
                 type="password"
                 name="confirmPassword"
                 value={formData.confirmPassword}
