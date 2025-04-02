@@ -1,4 +1,5 @@
 import AdminLogin from '../../components/AdminLogin';
+
 const Index = () => {
   return <AdminLogin />;
 };

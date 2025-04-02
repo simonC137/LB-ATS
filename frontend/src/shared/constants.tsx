@@ -2,10 +2,17 @@
 
 export const RouteNames = {
   Home: '/',
-  About: '/about',
-  'Find jobs': '/find-jobs',
-  Blog: '/blog',
+  // About: '/about',
+  // 'Find jobs': '/find-jobs',
+  // Blog: '/blog',
   Contact: '/contact',
+};
+
+export const adminMenusNames = {
+  Dashboard: '/admin/dashboard',
+  Profile: '/admin/profile',
+  Roles: '/admin/roles',
+  AddJob: '/admin/add-job',
 };
 
 export type FeaturedJobs = {
