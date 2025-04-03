@@ -15,27 +15,27 @@ const Navbar = () => {
                 <img className="w-20" src={logo} alt="logo image here" />
               </Link>
             </div>
-            <div className="hidden flex-none lg:block">
-              <ul className="menu menu-horizontal">
+            <div className="hidden lg:flex justify-center items-center h-full">
+              <ul className="flex items-center space-x-6">
                 {menus.map((menu) => (
                   <li key={menu.name}>
-                    <Link to={menu.route}>{menu.name} </Link>
+                    <Link
+                      to={menu.route}
+                      className="hover:text-orange-500 transition-all"
+                    >
+                      {menu.name}
+                    </Link>
                   </li>
                 ))}
 
                 <li>
                   <Link to="https://lifebonder.com/app_launch/" target="_blank">
-                    <button className="bg-gradient-to-r  from-orange-400 to-orange-600 text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg hover:from-orange-500 hover:to-orange-700 transition-all">
+                    <button className="bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg hover:from-orange-500 hover:to-orange-700 transition-all">
                       Get the app
                     </button>
                   </Link>
                 </li>
               </ul>
-              {/* <Link target="_blank" to="/admin">
-                <button className="btn btn-sm bg-white hover:bg-gray-200">
-                  Login
-                </button>
-              </Link> */}
             </div>
 
             <div className="flex-none lg:hidden">
@@ -68,7 +68,6 @@ const Navbar = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu bg-white text-black min-h-full w-80 p-4">
-            {/* Sidebar content here */}
             {menus.map((menu) => (
               <li key={menu.name}>
                 <Link to={menu.route}>{menu.name} </Link>
