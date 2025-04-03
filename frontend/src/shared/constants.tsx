@@ -18,6 +18,7 @@ export const adminMenusNames = {
 export type FeaturedJobs = {
   id: number;
   title: string;
+  team: string;
   location: string[];
   // icon: React.ElementType;
   // salary: string;
@@ -31,6 +32,7 @@ export const featuredjobs: FeaturedJobs[] = [
     title:
       'Flutter Mobile Developer building a Human-Centered Social Network app',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'Flutter',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:
@@ -40,6 +42,7 @@ export const featuredjobs: FeaturedJobs[] = [
     id: 2,
     title: 'Legal Executive Assistant at Human-Centered Social Network Startup',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'Legal',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:
@@ -49,6 +52,7 @@ export const featuredjobs: FeaturedJobs[] = [
     id: 3,
     title: 'Backend Developer at Human-Centered Social Network Startup',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'Backend',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:
@@ -58,6 +62,7 @@ export const featuredjobs: FeaturedJobs[] = [
     id: 4,
     title: 'DevOp at Human-Centered Social Network Startup',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'DevOps',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:
@@ -67,6 +72,7 @@ export const featuredjobs: FeaturedJobs[] = [
     id: 5,
     title: 'Legal Executive Assistant at Human-Centered Social Network Startup',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'Legal',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:
@@ -77,6 +83,7 @@ export const featuredjobs: FeaturedJobs[] = [
     title:
       'Expat Community Manager for new Human-Centered Social Network Startup',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'Community',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:
@@ -86,6 +93,7 @@ export const featuredjobs: FeaturedJobs[] = [
     id: 7,
     title: 'Blogger for new Human-Centered Social Network Startup',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'Blogging',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:
@@ -95,6 +103,7 @@ export const featuredjobs: FeaturedJobs[] = [
     id: 8,
     title: 'Angular Developer at Social Network Startup',
     location: ['Remote', 'Part-time', 'Internship'],
+    team: 'Frontend',
     // icon: VscLaw,
     // salary: 'Unpaid',
     description:

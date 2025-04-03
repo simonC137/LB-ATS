@@ -52,7 +52,7 @@ const FeaturedJob = () => {
         ))}
       </ul>
       <div className="flex justify-center items-center">
-        <button className="mt-8 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+        <button type='button' className="mt-8 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
           More Jobs
         </button>
       </div>
