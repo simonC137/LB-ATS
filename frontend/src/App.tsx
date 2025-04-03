@@ -61,6 +61,8 @@ import Profile from './pages/admin/Profile';
 import Roles from './pages/admin/Roles';
 import AddJob from './pages/admin/Add-Job';
 
+import JobBoard from './components/JobBoard';
+
 function App() {
   const location = useLocation();
   const excludedRoutes = [
@@ -80,6 +82,7 @@ function App() {
         <Route path="/jobDetail/:id" element={<JobDetails />}></Route>
         <Route path="/blogDetail/:id" element={<BlogDetails />}></Route>
         <Route path="/admin/" element={<AdminPage />}></Route>
+        <Route path="/jobs/" element={<JobBoard />}></Route>
 
         {/* Admin protected routes here */}
         <Route path="/admin/*" element={<AdminLayout />}>
