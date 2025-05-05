@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FeaturedJobs, featuredjobs } from '../shared/constants';
 
 const jobTypeColors: Record<string, string> = {
@@ -52,9 +52,14 @@ const FeaturedJob = () => {
         ))}
       </ul>
       <div className="flex justify-center items-center">
-        <button type='button' className="mt-8 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-          More Jobs
-        </button>
+        <Link to="/jobs" className="text-blue-500 hover:text-blue-700">
+          <button
+            type="button"
+            className="mt-8 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            View All Jobs
+          </button>
+        </Link>
       </div>
     </main>
   );
