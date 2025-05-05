@@ -14,7 +14,6 @@ const Navbar = () => {
                 <img className="w-20" src={logo} alt="logo image here" />
               </Link>
             </div>
-
             <div className="hidden lg:flex justify-center items-center h-full">
               <ul className="flex items-center space-x-6">
                 {menus.map((menu) => (
