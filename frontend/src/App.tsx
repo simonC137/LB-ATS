@@ -62,6 +62,9 @@ import Roles from './pages/admin/Roles';
 import AddJob from './pages/admin/Add-Job';
 
 import JobBoard from './components/JobBoard';
+import InactiveJobs from './pages/inactiveJobs';
+import CandidateDashboard from './pages/CandidateDashboard';
+
 
 function App() {
   const location = useLocation();
@@ -71,7 +74,11 @@ function App() {
     '/admin/roles',
     '/admin/profile',
     '/admin/add-job',
+    '/admin/inactive-jobs',
+    '?admin/candidates'
+
   ];
+ 
 
   return (
     <>
@@ -90,6 +97,10 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="roles" element={<Roles />} />
           <Route path="add-job" element={<AddJob />} />
+          <Route path="inactive-jobs" element={<InactiveJobs />} />
+          <Route path="candidates" element={<CandidateDashboard />} />
+
+
         </Route>
       </Routes>
       {!excludedRoutes.includes(location.pathname) && <Footer />}

@@ -2,18 +2,50 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo/logo-lifebonder.png';
 import { adminMenus } from '../shared/menu';
 import clsx from 'clsx';
-import { RiArrowDropDownLine } from 'react-icons/ri';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { setupAxiosInterceptors } from '../shared/axiosConfig';
 
 const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    navigate('/admin');
+  const [adminName, setAdminName] = useState('Admin');
+
+  const logoutHandler = async () => {
+    try {
+      await axios.get('/api/auth/logout', { withCredentials: true });
+      toast.success('Logged out successfully');
+
+      navigate('/admin');
+    } catch (error) {
+      toast.error('Logout failed');
+    }
   };
+
+  const fetchAdminProfile = async () => {
+    try {
+      const { data } = await axios.get('/api/auth/profile', {
+        withCredentials: true,
+      });
+      console.log(data);
+      setAdminName(`${data.first_name}`);
+    } catch (error) {
+      console.error('Failed to fetch admin profile:', error.message);
+      setAdminName('Admin');
+    }
+  };
+
+  useEffect(() => {
+    setupAxiosInterceptors();
+    fetchAdminProfile();
+  }, []);
 
   return (
     <div className="flex h-screen">
+      <ToastContainer position="top-center" autoClose={1500} />
       <aside className="bg-background fixed inset-y-0 left-0 z-10 w-52 flex-col border-r sm:flex hidden">
         <nav className="flex h-full flex-col px-4 py-4">
           <div className="mb-6 flex justify-start">
@@ -54,31 +86,8 @@ const AdminLayout = () => {
       <main className="flex-grow p-5 sm:ml-52">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <div className="flex grow justify-end px-2">
-            <div className="flex items-stretch ">
-              <div className="dropdown dropdown-end ">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost  rounded-field"
-                >
-                  <p>Hi Admin</p>
-                  <RiArrowDropDownLine size={24} />
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm"
-                >
-                  <li>
-                    <a>Profile</a>
-                  </li>
-                  <li>
-                    <a>Settings</a>
-                  </li>
-                  <li>
-                    <a>Logout</a>
-                  </li>
-                </ul>
-              </div>
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <p>Hello {adminName}</p>
             </div>
           </div>
         </header>

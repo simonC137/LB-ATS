@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Candidate = require('../models/candidate_model'); // Candidate model
+const Candidate = require('../models/candidate_model'); 
 
-// Route to clean up rejected candidates
 router.delete('/clean-rejected', async (req, res) => {
   try {
     // Find and delete candidates where app_status is 'rejected'

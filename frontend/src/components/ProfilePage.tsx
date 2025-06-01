@@ -1,24 +1,20 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface Profile {
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   role: string;
-  joined: string;
+  createdAt: string;
   permissions: string;
 }
 
 const ProfilePage: FC = () => {
-  const [admin, setAdmin] = useState<Profile>({
-    name: 'Admin User',
-    email: 'admin@example.com',
-    role: 'Administrator',
-    joined: 'January 10, 2023',
-    permissions: 'Full Access',
-  });
-
+  const [admin, setAdmin] = useState<Profile | null>(null);
+  const [formData, setFormData] = useState<Profile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(admin);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwords, setPasswords] = useState({
     current: '',
@@ -26,16 +22,37 @@ const ProfilePage: FC = () => {
     confirmPassword: '',
   });
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get('/api/auth/profile');
+        setAdmin(res.data);
+        setFormData(res.data);
+      } catch (err) {
+        console.error('Failed to load profile', err);
+      }
+    };
+    fetchProfile();
+  }, []);
+
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    setAdmin(formData);
-    setIsEditing(false);
+  const handleSave = async () => {
+    if (!formData) return;
+    try {
+      const res = await axios.put('/api/auth/profile', formData);
+      setAdmin(res.data);
+      setIsEditing(false);
+    } catch (err) {
+      console.error('Failed to update profile', err);
+      toast('Update failed.');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!formData) return;
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -43,21 +60,34 @@ const ProfilePage: FC = () => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
   };
 
-  const handlePasswordSave = () => {
+  const handlePasswordSave = async () => {
     if (passwords.newPassword !== passwords.confirmPassword) {
-      alert('New passwords do not match');
+      toast('New passwords do not match');
       return;
     }
-    alert('Password successfully updated');
-    setIsChangingPassword(false);
+
+    try {
+      await axios.post('/api/auth/change-password', {
+        currentPassword: passwords.current,
+        newPassword: passwords.newPassword,
+      });
+      toast('Password successfully updated');
+      setIsChangingPassword(false);
+      setPasswords({ current: '', newPassword: '', confirmPassword: '' });
+    } catch (err) {
+      console.error('Password change failed', err);
+      toast('Password change failed');
+    }
   };
+
+  if (!admin) return <p className="text-center mt-10">Loading profile...</p>;
 
   return (
     <div className="p-6 max-w-lg mx-auto border shadow-lg rounded-lg bg-white text-black">
       <h1 className="text-2xl text-center font-bold mb-4">Admin Profile</h1>
       <div className="space-y-2">
         <p>
-          <strong>Name:</strong> {admin.name}
+          <strong>Name:</strong> {admin.first_name}
         </p>
         <p>
           <strong>Email:</strong> {admin.email}
@@ -66,7 +96,12 @@ const ProfilePage: FC = () => {
           <strong>Role:</strong> {admin.role}
         </p>
         <p>
-          <strong>Joined:</strong> {admin.joined}
+          <strong>Joined:</strong>{' '}
+          {new Date(admin.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
         </p>
         <p>
           <strong>Permissions:</strong> {admin.permissions}
@@ -101,14 +136,14 @@ const ProfilePage: FC = () => {
         </ul>
       </div>
 
-      {isEditing && (
+      {isEditing && formData && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-black">
             <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
             <input
               type="text"
               name="name"
-              value={formData.name}
+              value={formData.first_name}
               onChange={handleChange}
               className="w-full p-2 border rounded mb-2"
               placeholder="Name"
