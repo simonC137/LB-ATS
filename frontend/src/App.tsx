@@ -62,7 +62,7 @@ import Roles from './pages/admin/Roles';
 import AddJob from './pages/admin/Add-Job';
 
 import JobBoard from './components/JobBoard';
-import InactiveJobs from './pages/inactiveJobs';
+import InactiveJobs from './pages/InactiveJobs';
 import CandidateDashboard from './pages/CandidateDashboard';
 
 
@@ -75,7 +75,7 @@ function App() {
     '/admin/profile',
     '/admin/add-job',
     '/admin/inactive-jobs',
-    '?admin/candidates'
+    '/admin/candidates'
 
   ];
  

@@ -5,18 +5,33 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const NodeCache = require('node-cache');
+const axios = require('axios');
+const rateLimit = require('express-rate-limit');
 
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
-  service: 'gmail',// Or your preferred email service
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 });
+
+const applyLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 3, // max 3 attempts per minute per IP
+  message: 'Too many applications from this IP, please try again later',
+});
+
+const verifyCaptcha = async (token) => {
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+  const response = await axios.post(url);
+  return response.data.success;
+};
 //Candidate Route
 
-router.post('/apply', async (req, res) => {
+router.post('/apply',applyLimiter, async (req, res) => {
   const {
     first_name,
     last_name,
@@ -28,7 +43,14 @@ router.post('/apply', async (req, res) => {
     title,
     application_date,
     app_status,
+    captchaToken,
   } = req.body;
+  const isValid = await verifyCaptcha(captchaToken);
+  if (!isValid) return res.status(403).json({ message: 'CAPTCHA failed' });
+  if (req.body.website) {
+    return res.status(400).json({ message: 'Spam detected' });
+  }
+
   try {
     const jobDoc = await job.findOne({ title });
     if (!jobDoc) {
@@ -36,15 +58,13 @@ router.post('/apply', async (req, res) => {
       return res.status(404).json({ message: 'Job not found!' });
     }
 
-    const existCandidate = await Candidate.findOne({
+    const existCandidate = await Candidate.countDocuments({
       email,
       job_id: jobDoc._id,
     });
-    
-    if (existCandidate)
-      return res
-        .status(400)
-        .json({ message: 'Candidate already applied for this job!' });
+    if (existCandidate > 0) {
+      return res.status(400).json({ message: 'Candidate already applied for this job!' });
+    }
     const newCandidate = new Candidate({
       first_name,
       last_name,

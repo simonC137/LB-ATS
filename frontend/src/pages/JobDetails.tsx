@@ -1,15 +1,16 @@
-import { featuredjobs } from '../shared/constants';
 import logo from '../../src/assets/logo/logo-lifebonder.png';
 import { useParams } from 'react-router-dom';
 import hrImage from '../assets/hr.jpg';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const JobDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [jobDetail, setJobDetail] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     first_name: '',
@@ -19,6 +20,7 @@ const JobDetails = () => {
     location: '',
     message: '',
     cv_url: '',
+    website: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
@@ -44,11 +46,26 @@ const JobDetails = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!jobDetail) return;
     if (!cvFile) {
       alert('Please upload your CV before submitting.');
+      return;
+    }
+    if (
+      cvFile &&
+      !['application/pdf', 'application/msword'].includes(cvFile.type)
+    ) {
+      alert('Only PDF or DOC files are allowed.');
+      return;
+    }
+    if (!captchaToken) {
+      alert('Please complete the CAPTCHA.');
       return;
     }
 
@@ -70,6 +87,7 @@ const JobDetails = () => {
         application_date: new Date(),
         app_status: 'pending',
         cv_url: uploadRes.data.cv_url,
+        captchaToken,
       };
 
       const res = await axios.post('/api/candidate/apply', payload);
@@ -237,7 +255,19 @@ const JobDetails = () => {
 
           <div className=" p-5 rounded-lg w-full md:w-1/3 lg:w-1/2 sticky top-11  ">
             <h2 className="text-xl font-semibold mb-4">Apply for this job</h2>
-            <form className="grid gap-4" onSubmit={handleSubmit}>
+            <form
+              className="grid gap-4"
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+            >
+              <input
+                type="text"
+                name="website"
+                style={{ display: 'none' }}
+                value={form.website}
+                onChange={handleChange}
+              />
+
               <input
                 name="first_name"
                 value={form.first_name}
@@ -289,13 +319,17 @@ const JobDetails = () => {
                   onChange={(e) => setCvFile(e.target.files?.[0] || null)}
                   className="mt-1 w-full"
                 />
-                <small>File upload to be implemented</small>
+                <small>Supported formats: PDF, DOCX</small>
               </label>
 
               <label className="flex items-center gap-2">
                 <input type="checkbox" required />
                 <span>I agree to the terms and conditions</span>
               </label>
+              <ReCAPTCHA
+                sitekey='123'
+                onChange={handleCaptchaChange}
+              />
 
               <button
                 type="submit"
