@@ -327,7 +327,7 @@ const JobDetails = () => {
                 <span>I agree to the terms and conditions</span>
               </label>
               <ReCAPTCHA
-                sitekey='123'
+                sitekey={import.meta.env.Captcha_key}
                 onChange={handleCaptchaChange}
               />
 
