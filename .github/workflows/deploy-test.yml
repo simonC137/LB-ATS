@@ -1,0 +1,32 @@
+name: Deploy Testing App
+
+on:
+  push:
+    branches:
+      - test
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: /home/simon/_apps/LB-ATS
+
+      - name: Build frontend
+        run: |
+          cd /home/simon/_apps/LB-ATS/frontend
+          npm install
+          npm run build
+
+      - name: Build backend
+        run: |
+          cd /home/simon/_apps/LB-ATS/backend
+          npm install
+
+      - name: Restart app
+        run: |
+          pm2 restart frontend || pm2 start frontend/dist/index.js --name frontend
+          pm2 restart backend || pm2 start backend/index.js --name backend
