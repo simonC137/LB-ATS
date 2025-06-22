@@ -3,7 +3,8 @@ name: Deploy Testing App
 on:
   push:
     branches:
-      - testing
+      - test
+  workflow_dispatch:
 
 jobs:
   deploy:
