@@ -13,17 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          path: /home/simon/_apps/LB-ATS
+          path: /LB-ATS
 
       - name: Build frontend
         run: |
-          cd /home/simon/_apps/LB-ATS/frontend
+          cd /LB-ATS/frontend
           npm install
           npm run build
 
       - name: Build backend
         run: |
-          cd /home/simon/_apps/LB-ATS/backend
+          cd /LB-ATS/backend
           npm install
 
       - name: Restart app
