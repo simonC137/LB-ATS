@@ -16,13 +16,13 @@ jobs:
 
       - name: Build frontend
         run: |
-          cd LB-ATS/frontend
+          cd frontend
           npm install
           npm run build
 
       - name: Build backend
         run: |
-          cd LB-ATS/backend
+          cd backend
           npm install
 
       - name: Restart app
