@@ -33,6 +33,7 @@ const AdminLayout = () => {
       console.log(data);
       setAdminName(`${data.first_name}`);
     } catch (error) {
+      // @ts-ignore
       console.error('Failed to fetch admin profile:', error.message);
       setAdminName('Admin');
     }
