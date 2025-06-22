@@ -1,35 +1,62 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Job = require('./models/job'); // Job model
+const Job = require('../models/jobs_model'); // Job model
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
 
-// POST Endpoint to save a new job
-router.post('/jobs', async (req, res) => {
+// GET all jobs
+router.get('/', async (req, res) => {
   try {
-    const generatedJobId = uuidv4();
+    const jobs = await Job.find();
+    res.status(200).json(jobs);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch jobs', error });
+  }
+});
+// GET all active jobs
+router.get('/active', async (req, res) => {
+  try {
+    const activeJobs = await Job.find({ isActive: true });
+    res.status(200).json(activeJobs);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch active jobs', error });
+  }
+});
+// GET all inactive jobs
+router.get('/inactive', async (req, res) => {
+  try {
+    const inactiveJobs = await Job.find({ isActive: false });
+    res.status(200).json(inactiveJobs);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch inactive jobs', error });
+  }
+});
 
-    const {
-      current_job_title,
-      current_job_description,
-      location,
-      isActive
-    } = req.body;
+// GET a single job by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const jobEl = await Job.findById(req.params.id);
+    if (!jobEl) return res.status(404).json({ message: 'Job not found' });
+    res.json(jobEl);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch job' });
+  }
+});
 
-    // Create a new job document
+// POST a new job
+router.post('/', async (req, res) => {
+  try {
+    const { title, description, team, location, isActive } = req.body;
+
     const newJob = new Job({
-     job_id: generatedJobId,
-      current_job_title,
-      current_job_description,
+      title,
+      description,
+      team,
       location,
-      job_date:new Date(), 
-      isActive: isActive !== undefined ? isActive : true 
+      job_date: new Date(),
+      isActive: isActive !== undefined ? isActive : true
     });
 
-    // Save the job to the database
     const savedJob = await newJob.save();
-
-    // Return success response
     res.status(201).json({
       message: 'Job saved successfully!',
       job: savedJob
@@ -39,4 +66,47 @@ router.post('/jobs', async (req, res) => {
   }
 });
 
+// PUT (Update) job by ID
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedJob = await Job.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        description: req.body.description,
+        location: req.body.location,
+        team: req.body.team, 
+        isActive: req.body.isActive 
+      },
+      { new: true }
+    );
 
+    if (!updatedJob) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    res.status(200).json({
+      message: 'Job updated successfully!',
+      job: updatedJob
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating job: ' + error.message });
+  }
+});
+
+// DELETE job by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedJob = await Job.findByIdAndDelete(req.params.id);
+
+    if (!deletedJob) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    res.status(200).json({ message: 'Job deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting job: ' + error.message });
+  }
+});
+
+module.exports = router;

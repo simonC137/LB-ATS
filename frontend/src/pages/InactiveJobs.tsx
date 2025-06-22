@@ -3,23 +3,35 @@ import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiPlus, FiX, FiSearch } from 'react-icons/fi';
 import axios from 'axios';
+import {  FaToggleOn, FaToggleOff } from 'react-icons/fa';
 
 interface Job {
-  _id: number;
+  _id: string;
   title: string;
   team: string;
   location: string[];
   description: string;
+  isActive:boolean;
 }
 
-const JobBoard: React.FC = () => {
+const InactiveJobs: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
   const navigate = useNavigate();
-
+  const toggleActiveStatus = async (id: string, currentStatus: boolean) => {
+    try {
+      const response = await axios.put(`/api/jobs/${id}`, {
+        isActive: !currentStatus,
+      });
+      const updatedJob: Job = response.data.job;
+      setJobs(jobs.map((job) => (job._id === id ? updatedJob : job)));
+    } catch (error) {
+      console.error('Failed to toggle job status:', error);
+    }
+  };
   useEffect(() => {
-    axios.get('/api/jobs/active')
+    axios.get('/api/jobs/inactive')
       .then(response => setJobs(response.data))
       .catch(error => console.error('Error fetching jobs:', error));
   }, []);
@@ -31,7 +43,7 @@ const JobBoard: React.FC = () => {
     setExpandedJobId(expandedJobId === jobId ? null : jobId);
   };
 
-  const handleApplyNow = (jobId: number) => {
+  const handleApplyNow = (jobId: string) => {
     navigate(`/jobDetail/${jobId}`);
   };
 
@@ -58,9 +70,6 @@ const JobBoard: React.FC = () => {
       <div className="h-16"></div>
 
       <div className="p-6">
-        <h1 className="text-5xl font-bold text-center mb-10 mt-16">
-          We are looking for you!
-        </h1>
 
         {/* Search Section */}
         <div className="max-w-2xl mx-auto mb-8">
@@ -119,6 +128,17 @@ const JobBoard: React.FC = () => {
                       <FiPlus className="w-5 h-5" />
                     )}
                   </button>
+                  <button
+                                              title={job.isActive ? 'Deactivate' : 'Activate'}
+                                              className={`btn btn-sm ${
+                                                job.isActive ? 'btn-success' : 'btn-neutral'
+                                              } text-white`}
+                                              onClick={() =>
+                                                toggleActiveStatus(job._id, job.isActive ?? true)
+                                              }
+                                            >
+                                              {job.isActive ? <FaToggleOn /> : <FaToggleOff />}
+                                            </button>
                 </div>
 
                 {expandedJobId === job._id.toString() && (
@@ -133,6 +153,7 @@ const JobBoard: React.FC = () => {
                       >
                         View role
                       </button>
+                      
                       {/* <button className="px-4 py-2 text-blue-600 hover:underline">
                         View role
                       </button> */}
@@ -154,4 +175,4 @@ const JobBoard: React.FC = () => {
   );
 };
 
-export default JobBoard;
+export default InactiveJobs;

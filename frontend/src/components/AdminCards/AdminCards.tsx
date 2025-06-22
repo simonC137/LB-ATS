@@ -2,11 +2,12 @@ import { ReactNode } from 'react';
 
 type CardProps = {
   children: ReactNode;
+  onClick?: () => void;
 };
 
-export const Card: React.FC<CardProps> = ({ children }) => {
+export const Card: React.FC<CardProps> = ({ children,onClick }) => {
   return (
-    <div className="border rounded-lg shadow-md bg-white p-4">{children}</div>
+    <div className="rounded-xl border bg-white p-4 shadow-md cursor-pointer transition hover:shadow-lg" onClick={onClick}>{children}</div>
   );
 };
 

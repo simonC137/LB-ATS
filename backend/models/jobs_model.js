@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
 
 const jobSchema = new mongoose.Schema({
-  job_id: {
-    type: String,
-    required: true,
-  },
-  current_job_title: {
+ 
+title: {
     type: String,
     default: '',
   },
-  current_job_description: {
+  team: {
+    type: String,
+    default: '',
+  },
+ description: {
     type: String,
     default: '',
   },
@@ -29,4 +30,4 @@ const jobSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('job', jobSchema);
+module.exports = mongoose.model('Job', jobSchema);
