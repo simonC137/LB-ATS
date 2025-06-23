@@ -12,13 +12,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
 
       - name: Build frontend
         run: |
           cd frontend
           npm install
           npm run build
+
+      - name: Copy frontend build to target directory
+        run: |
+          TARGET_DIR="/_app/ATS"
+          sudo rm -rf "$TARGET_DIR"/*
+          sudo cp -r ./frontend/dist/* "$TARGET_DIR"/
 
       - name: Build backend
         run: |
@@ -34,5 +39,3 @@ jobs:
             echo "Starting backend process..."
             pm2 start backend/server.js --name backend
           fi
-
-
