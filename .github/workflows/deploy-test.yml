@@ -32,6 +32,7 @@ jobs:
             pm2 restart backend
           else
             echo "Starting backend process..."
-            pm2 start backend/index.js --name backend
+            pm2 start backend/server.js --name backend
           fi
+
 
