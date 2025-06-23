@@ -21,13 +21,19 @@ jobs:
 
       - name: Copy frontend build to target directory
         run: |
-          TARGET_DIR="/_app/ATS"
+          TARGET_DIR="/_app/ATS/frontend"
           sudo rm -rf "$TARGET_DIR"/*
           sudo cp -r ./frontend/dist/* "$TARGET_DIR"/
 
+      - name: Copy backend to target directory
+        run: |
+          TARGET_DIR="/_app/ATS/backend"
+          sudo rm -rf "$TARGET_DIR"/*
+          sudo cp -r ./backend/* "$TARGET_DIR"/
+
       - name: Build backend
         run: |
-          cd backend
+          cd /_app/ATS/backend
           npm install
 
       - name: Restart backend app with PM2
@@ -37,5 +43,5 @@ jobs:
             pm2 restart backend
           else
             echo "Starting backend process..."
-            pm2 start backend/server.js --name backend
+            pm2 start /_app/ATS/backend/server.js --name backend
           fi
