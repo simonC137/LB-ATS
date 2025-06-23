@@ -34,7 +34,7 @@ jobs:
       - name: Build backend
         run: |
           cd /_app/ATS/backend
-          npm install
+          sudo npm install
 
       - name: Restart backend app with PM2
         run: |
