@@ -38,10 +38,10 @@ jobs:
 
       - name: Restart backend app with PM2
         run: |
-          if pm2 list | grep -q backend; then
+          if pm2 list | grep -q lbats-backend; then
             echo "Restarting existing backend process..."
-            pm2 restart backend
+            pm2 restart lbats-backend
           else
             echo "Starting backend process..."
-            pm2 start /_app/ATS/backend/server.js --name backend
+            pm2 start /_app/ATS/backend/server.js --name lbats-backend
           fi
