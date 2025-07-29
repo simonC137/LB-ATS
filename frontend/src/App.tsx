@@ -64,7 +64,7 @@ import AddJob from './pages/admin/Add-Job';
 import JobBoard from './components/JobBoard';
 import InactiveJobs from './pages/InactiveJobs';
 import CandidateDashboard from './pages/CandidateDashboard';
-
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 function App() {
   const location = useLocation();
@@ -75,10 +75,8 @@ function App() {
     '/admin/profile',
     '/admin/add-job',
     '/admin/inactive-jobs',
-    '/admin/candidates'
-
+    '/admin/candidates',
   ];
- 
 
   return (
     <>
@@ -99,8 +97,6 @@ function App() {
           <Route path="add-job" element={<AddJob />} />
           <Route path="inactive-jobs" element={<InactiveJobs />} />
           <Route path="candidates" element={<CandidateDashboard />} />
-
-
         </Route>
       </Routes>
       {!excludedRoutes.includes(location.pathname) && <Footer />}
@@ -111,7 +107,11 @@ function App() {
 function AppWrapper() {
   return (
     <BrowserRouter>
-      <App />
+      <GoogleReCaptchaProvider
+        reCaptchaKey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+      >
+        <App />
+      </GoogleReCaptchaProvider>
     </BrowserRouter>
   );
 }

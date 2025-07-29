@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-
+const dotenv = require('dotenv');
+dotenv.config();
 const Candidate = require('./models/candidate_model');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
@@ -40,6 +41,8 @@ app.use('/delete', cleanRejectedRoute);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/uploads', uploadRoutes);
 app.use('/stats', statsRoutes);
+app.use('/stats/count', statsRoutes);
+
 app.use('/candidates', cleanRejectedRoute);
 
 
