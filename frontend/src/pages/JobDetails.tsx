@@ -93,6 +93,18 @@ const JobDetails = () => {
 
       const res = await axios.post('/api/candidate/apply', payload);
       setSuccess(res.data.message);
+      setForm({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        location: '',
+        message: '',
+        cv_url: '',
+        website: '',
+      });
+      setCvFile(null);
+
     
     } catch (err: any) {
       alert(err.response?.data?.message || 'Something went wrong');
