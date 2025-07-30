@@ -146,5 +146,24 @@ router.post('/apply', applyLimiter, async (req, res) => {
     res.status(500).json({ message: 'Failed to process application', error: error.message });
   }
 });
+// PUT / update candidate status or fields
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedCandidate = await Candidate.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    if (!updatedCandidate) {
+      return res.status(404).json({ message: 'Candidate not found' });
+    }
+
+    res.json({ message: 'Candidate updated successfully', candidate: updatedCandidate });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update candidate', error: error.message });
+  }
+});
+
 
 module.exports = router;
