@@ -45,7 +45,16 @@ const verifyCaptcha = async (token) => {
     return false;
   }
 };
-
+// GET /candidate 
+router.get('/', async (req, res) => {
+  try {
+    const candidates = await Candidate.find().populate('job_id');
+    res.json(candidates);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch candidates' });
+  }
+});
 // POST /api/candidate/apply
 router.post('/apply', applyLimiter, async (req, res) => {
   const {

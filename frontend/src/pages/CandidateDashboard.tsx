@@ -36,6 +36,7 @@ const CandidateDashboard: React.FC = () => {
       setCandidates(res.data);
     } catch (err: any) {
       setError(err.response?.data?.message || err.message);
+
     } finally {
       setLoading(false);
     }

@@ -5,10 +5,13 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const router = express.Router();
 const NodeCache = require('node-cache');
+const crypto = require('crypto');
 
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'send.one.com', 
+  port: 587,          
+  secure: false,         
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -232,5 +235,64 @@ router.post('/change-password', authMiddleware, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Forget Password
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const admin = await Admin.findOne({ email });
+    if (!admin) return res.status(404).json({ message: 'Admin not found' });
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const tokenHash = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    admin.resetPasswordToken = tokenHash;
+    admin.resetPasswordExpires = Date.now() + 15 * 60 * 1000; //15 min
+
+    await admin.save();
+
+    const resetURL = `http://localhost:5173/reset-password/${resetToken}`; 
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: admin.email,
+      subject: 'Password Reset Request',
+      text: `You requested a password reset. Use the link below to reset it:\n\n${resetURL}\n\nLink expires in 15 minutes.`,
+    });
+
+    res.json({ message: 'Password reset link sent.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error sending reset email' });
+  }
+});
+//Reset Password
+router.post('/reset-password/:token', async (req, res) => {
+  const { token } = req.params;
+  const { newPassword } = req.body;
+
+  try {
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+
+    const admin = await Admin.findOne({
+      resetPasswordToken: tokenHash,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!admin) return res.status(400).json({ message: 'Invalid or expired token' });
+
+  
+    admin.password =newPassword;
+    admin.resetPasswordToken = undefined;
+    admin.resetPasswordExpires = undefined;
+
+    await admin.save();
+
+    res.json({ message: 'Password reset successful' });
+  } catch (err) {
+    res.status(500).json({ message: 'Password reset failed' });
+  }
+});
+
 
 module.exports = router;
