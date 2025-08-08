@@ -105,7 +105,6 @@ router.post('/apply', applyLimiter, async (req, res) => {
 
     // Create candidate with unique id
     const newCandidate = new Candidate({
-      id: uuidv4(),
       first_name,
       last_name,
       phone,
@@ -130,7 +129,6 @@ router.post('/apply', applyLimiter, async (req, res) => {
         subject: 'Thank you for your application',
         text: `Hi ${first_name},\n\nHow nice that you are interested in the position as ${title} with Frontend interest for LifeBonder!\n\nWe have received your application and will get back to you with more information about what the next step in the process looks like if it becomes relevant.`,
       });
-      console.log(`Email sent successfully to ${email}`);
     } catch (emailError) {
       console.error('Failed to send email:', emailError.message);
       return res.status(201).json({
