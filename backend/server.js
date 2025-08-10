@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-const dotenv = require('dotenv');
+ const dotenv = require('dotenv');
+ dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 dotenv.config();
 const Candidate = require('./models/candidate_model');
 const bodyParser = require('body-parser');
