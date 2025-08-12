@@ -1,0 +1,47 @@
+name: Deploy Testing App
+
+on:
+  push:
+    branches:
+      - test
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Copy frontend build to target directory
+        run: |
+          TARGET_DIR="/_app/ATS/frontend"
+          sudo rm -rf "$TARGET_DIR"/*
+          sudo cp -r ./frontend/dist/* "$TARGET_DIR"/
+
+      - name: Copy backend to target directory
+        run: |
+          TARGET_DIR="/_app/ATS/backend"
+          sudo rm -rf "$TARGET_DIR"/*
+          sudo cp -r ./backend/* "$TARGET_DIR"/
+
+      - name: Build backend
+        run: |
+          cd /_app/ATS/backend
+          sudo npm install
+
+      - name: Restart backend app with PM2
+        run: |
+          if pm2 list | grep -q lbats-backend; then
+            echo "Restarting existing backend process..."
+            pm2 restart lbats-backend
+          else
+            echo "Starting backend process..."
+            pm2 start /_app/ATS/backend/server.js --name lbats-backend
+          fi
