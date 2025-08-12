@@ -25,7 +25,6 @@ const JobDetails = () => {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [cvFile, setCvFile] = useState<File | null>(null);
-  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -46,25 +45,36 @@ const JobDetails = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const isFormValid = () => {
-    const requiredFieldsFilled = Object.entries(form).every(([key, value]) => {
-      if (key === 'website') return true;
-      return value.trim() !== '';
+    const requiredFields = ['first_name', 'last_name', 'email', 'phone', 'location', 'message']; // 
+    const requiredFieldsFilled = requiredFields.every((key) => {
+      const isValid = form[key].trim() !== '';
+      return isValid;
     });
-
-    const cvUploaded =
-      cvFile && ['application/pdf', 'application/msword'].includes(cvFile.type);
-
-    return requiredFieldsFilled && cvUploaded && termsAccepted;
+    return requiredFieldsFilled;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isFormValid()) {
+      alert('Please fill all required fields');
+      return;
+    }
+
     if (!jobDetail) return;
 
-    if (!isFormValid()) {
-      alert('Please fill all required fields, upload a valid CV, and accept terms.');
+    if (!cvFile) {
+      alert('Please upload your CV before submitting.');
+      return;
+    }
+
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
+    if (cvFile && !allowedTypes.includes(cvFile.type)) {
+      alert('Only PDF, DOC, or DOCX files are allowed.');
       return;
     }
 
@@ -77,9 +87,10 @@ const JobDetails = () => {
 
     try {
       const token = await executeRecaptcha('submit');
+      console.log('reCAPTCHA token:', token);
 
       const formData = new FormData();
-      formData.append('cv', cvFile as File);
+      formData.append('cv', cvFile);
 
       const uploadRes = await axios.post('/api/uploads', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -107,7 +118,6 @@ const JobDetails = () => {
         website: '',
       });
       setCvFile(null);
-      setTermsAccepted(false);
     } catch (err: any) {
       alert(err.response?.data?.message || 'Something went wrong');
     } finally {
@@ -145,6 +155,120 @@ const JobDetails = () => {
         <div className="w-[1500px]">
           <div className="mt-5 p-5">
             <p>{jobDetail.description}</p>
+          </div>
+
+          <div className="my-5 p-5">
+            <h1 className="text-2xl font-semibold my-5">Experience</h1>
+            <p>
+              You have in-depth knowledge of managing systems, analyzing and
+              extract mission critical information, and you like to participate
+              in architecture and software development activities and take care
+              of the release, deployment and security. You will help creating a
+              comfortable environment for development.
+            </p>
+
+            <div>
+              <h1 className="text-2xl font-semibold my-5">Responsibilities</h1>
+              <ul className="list-inside list-disc space-y-2">
+                <li>Take care of the release and deployment.</li>
+                <li>
+                  Help the team with version controlling and proper security.
+                </li>
+                <li>
+                  Develop and maintain mission-critical information extraction,
+                  analysis, and manageing systems.
+                </li>
+                <li>
+                  Implement streaming analysis algorithms to generate question
+                  focused data sets (QFDs).
+                </li>
+                <li>
+                  Provides direct and responsive support for urgent analytic
+                  needs.
+                </li>
+                <li>
+                  Participates in architecture and software development
+                  activities.
+                </li>
+                <li>Translates loosely defined requirements into solutions.</li>
+                <li>
+                  Uses open-source technologies and tools to accomplish specific
+                  use cases encountered within the project.
+                </li>
+                <li>
+                  Uses coding languages or scripting methodologies to solve a
+                  problem with a custom workflow.
+                </li>
+                <li>
+                  Collaborates with others on the project to brainstorm about
+                  the best way to tackle a complex technological infrastructure,
+                  security, or development problem.
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h1 className="text-2xl font-semibold my-5">Skills</h1>
+              <ul className="list-inside list-disc space-y-2">
+                <li>Good oral and written communication skills</li>
+                <li>Excellent problem-solving and troubleshooting skills</li>
+                <li>
+                  Knowledge of best practices and IT operations in an always-up,
+                  always-available service
+                </li>
+                <li>
+                  Experience with or knowledge of Agile Software Development
+                  methodologies
+                </li>
+                <li>Familiarity with container orchestration services </li>
+                <li>
+                  Participates in architecture and software development
+                  activities.
+                </li>
+                <li>
+                  Familiarity with agile software development in Angular, C/C++,
+                  JavaScript, TypeScript, Entity Framework, ASP.NET Core
+                </li>
+                <li>
+                  Experience administering and deploying development CI/CD tools
+                  such as Git, Jira, GitLab, or Jenkins
+                </li>
+                <li>
+                  Significant experience with Windows and Linux operating system
+                  environments
+                </li>
+                <li>
+                  Experience with infrastructure scripting solutions such as
+                  PowerShell or Python
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h1 className="text-2xl font-semibold my-5">What we offer</h1>
+              <ul className="list-inside list-disc space-y-2">
+                <li>
+                  We are a team of endlessly dedicated developers offering a fun
+                  and friendly work environment where everyone is equal.
+                </li>
+                <li>
+                  Awesome recommendations and when you’re ready to move on,
+                  we’ve got your back.
+                </li>
+                <li>
+                  We offer real-world work experience and exciting challenges
+                  where you can make a real difference.
+                </li>
+                <li>Potential for Full-time hires at a later date.</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p>
+              {' '}
+              For more information or questions please contact us at
+              development@lifebonder.com
+            </p>
           </div>
         </div>
 
@@ -215,22 +339,17 @@ const JobDetails = () => {
               />
               <small>Supported formats: PDF, DOC</small>
             </label>
-
+{/* 
             <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={termsAccepted}
-                onChange={(e) => setTermsAccepted(e.target.checked)}
-                required
-              />
+              <input type="checkbox" required />
               <span>I agree to the terms and conditions</span>
-            </label>
+            </label> */}
 
             <button
               type="submit"
-              disabled={submitting || !isFormValid()}
+              disabled={submitting || !isFormValid() ||!cvFile}
               className={`py-2 px-4 rounded text-white ${
-                submitting || !isFormValid()
+                submitting || !isFormValid()||!cvFile
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-blue-600 hover:bg-blue-500'
               }`}

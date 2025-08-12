@@ -70,7 +70,6 @@ import AdminResetPassword from './pages/admin/AdminResetPassword';
 
 function App() {
   const location = useLocation();
-
   const excludedRoutes = [
     '/admin',
     '/forgot-password',
