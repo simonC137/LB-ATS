@@ -11,7 +11,6 @@ const jobTypeColors: Record<string, string> = {
 };
 
 const FeaturedJob = () => {
-  // @ts-expect-error unused variable, will be used later
   const [featuredJobs, setFeaturedJobs] =
     useState<FeaturedJobs[]>(featuredjobs);
   const navigate = useNavigate();
