@@ -5,7 +5,7 @@ import { FiPlus, FiX, FiSearch } from 'react-icons/fi';
 import axios from 'axios';
 
 interface Job {
-  _id: number;
+  _id: string;
   title: string;
   team: string;
   location: string[];
@@ -31,7 +31,7 @@ const JobBoard: React.FC = () => {
     setExpandedJobId(expandedJobId === jobId ? null : jobId);
   };
 
-  const handleApplyNow = (jobId: number) => {
+  const handleApplyNow = (jobId: string) => {
     navigate(`/jobDetail/${jobId}`);
   };
 
