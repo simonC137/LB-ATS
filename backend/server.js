@@ -35,17 +35,16 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
-app.use('/auth',authRoutes)
-app.use('/candidate',candidateRoutes)
-app.use('/jobs', jobsRoutes);
-app.use('/delete', cleanRejectedRoute);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/uploads', uploadRoutes);
-app.use('/stats', statsRoutes);
-app.use('/stats/count', statsRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/candidate', candidateRoutes);
+app.use('/api/jobs', jobsRoutes);
+app.use('/api/delete', cleanRejectedRoute);
+app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/uploads', uploadRoutes);
+app.use('/api/stats', statsRoutes);
+app.use('/api/stats/count', statsRoutes);
+app.use('/api/candidates', cleanRejectedRoute);
 
-app.use('/candidates', cleanRejectedRoute);
 
 
 
