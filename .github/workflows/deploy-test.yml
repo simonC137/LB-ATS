@@ -10,38 +10,65 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
+      # 1️⃣ Pull code into the runner's _work directory
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2️⃣ Build frontend in _work
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm ci
       - name: Build frontend
         run: |
           cd frontend
-          npm install
           npm run build
 
-      - name: Copy frontend build to target directory
+      # 3️⃣ Copy built frontend to _apps (dist only)
+      - name: Deploy frontend
         run: |
-          TARGET_DIR="/_app/ATS/frontend"
+          TARGET_DIR="$HOME/_apps/LB-ATS/frontend"
+          sudo mkdir -p "$TARGET_DIR"
           sudo rm -rf "$TARGET_DIR"/*
           sudo cp -r ./frontend/dist/* "$TARGET_DIR"/
 
-      - name: Copy backend to target directory
+      # 4️⃣ Build backend in _work
+      - name: Install backend dependencies
         run: |
-          TARGET_DIR="/_app/ATS/backend"
+          cd backend
+          npm ci --omit=dev
+
+      # 5️⃣ Copy backend source to _apps (without overwriting .env)
+      - name: Deploy backend
+        run: |
+          TARGET_DIR="$HOME/_apps/LB-ATS/backend"
+          sudo mkdir -p "$TARGET_DIR"
           sudo rm -rf "$TARGET_DIR"/*
           sudo cp -r ./backend/* "$TARGET_DIR"/
+          # Ensure we don't overwrite the shared .env
+          if [ -f "$TARGET_DIR/.env" ]; then
+            echo "Preserving backend .env file."
+          fi
 
-      - name: Build backend
+      # 6️⃣ Ensure shared .env exists (but never overwrite)
+      - name: Ensure shared .env exists
         run: |
-          cd /_app/ATS/backend
-          sudo npm install
+          ENV_FILE="$HOME/_apps/LB-ATS/.env"
+          if [ ! -f "$ENV_FILE" ]; then
+            echo "# Add your environment variables here" | sudo tee "$ENV_FILE"
+            echo "Created placeholder .env in _apps/LB-ATS/"
+          else
+            echo "Shared .env already exists, leaving it untouched."
+          fi
 
+      # 7️⃣ Restart backend with PM2
       - name: Restart backend app with PM2
         run: |
+          APP_DIR="$HOME/_apps/LB-ATS/backend"
           if pm2 list | grep -q lbats-backend; then
             echo "Restarting existing backend process..."
             pm2 restart lbats-backend
           else
             echo "Starting backend process..."
-            pm2 start /_app/ATS/backend/server.js --name lbats-backend
+            pm2 start "$APP_DIR/server.js" --name lbats-backend
           fi
