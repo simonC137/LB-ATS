@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom'; // If using React Router
 import hero from '../assets/heroImage/hero.png';
+import axios from 'axios';
 
 /**
  * HeroSection component renders the hero section of the page.
@@ -8,7 +9,19 @@ import hero from '../assets/heroImage/hero.png';
  */
 const HeroSection: React.FC = () => {
   const navigate = useNavigate(); // React Router navigation
-
+  const [jobCount,setJobCount]=useState(null);
+  useEffect(() => {
+    const fetchJobCount = async () => {
+      try {
+        const res = await axios.get('/api/stats/count');
+        setJobCount(res.data.count);
+      } catch (error) {
+        console.error('Failed to fetch job count', error);
+      }
+    };
+  
+    fetchJobCount();
+  }, []);
   return (
     <section className="hero bg-white border-b border-slate-100 mb-12">
       <div className="container min-h-[80vh] mx-auto flex flex-col lg:flex-row-reverse items-center justify-center">
@@ -20,7 +33,7 @@ const HeroSection: React.FC = () => {
         />
         <div className="text-center lg:text-left leading-8">
           <h3 className="text-5xl font-medium mb-2 sm:mt-6">
-            There Are <span className="text-orange-600">300</span> Postings Here{' '}
+            There Are <span className="text-orange-600">{jobCount}</span> Postings Here{' '}
             <br />
             <span className="block">For You!</span>
           </h3>

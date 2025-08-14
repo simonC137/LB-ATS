@@ -1,4 +1,5 @@
 const path = require('path');
+const dotenv = require('dotenv'); 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const express = require('express');
 const mongoose = require('mongoose'); 
@@ -6,6 +7,8 @@ const cors = require('cors');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 
+
+dotenv.config();
 const Candidate = require('./models/candidate_model');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
@@ -40,6 +43,8 @@ app.use('/delete', cleanRejectedRoute);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/uploads', uploadRoutes);
 app.use('/stats', statsRoutes);
+app.use('/stats/count', statsRoutes);
+
 app.use('/candidates', cleanRejectedRoute);
 
 
@@ -69,3 +74,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+

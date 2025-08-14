@@ -28,5 +28,14 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch admin stats', error: err.message });
   }
 });
+// GET job count
+router.get('/count', async (req, res) => {
+  try {
+    const count = await Job.countDocuments({ isActive: true }); 
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to count jobs', error });
+  }
+});
 
 module.exports = router;
