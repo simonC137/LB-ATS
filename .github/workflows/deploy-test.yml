@@ -72,3 +72,4 @@ jobs:
           else
             echo "Starting backend process..."
             pm2 start "$BACKEND_DIR/server.js" --name lbats-backend
+          fi
