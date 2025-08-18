@@ -1,5 +1,5 @@
 // components/JobFilterComponent.tsx
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiPlus, FiX, FiSearch } from 'react-icons/fi';
 import axios from 'axios';
@@ -19,10 +19,22 @@ const JobBoard: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/api/jobs/active')
-      .then(response => setJobs(response.data))
-      .catch(error => console.error('Error fetching jobs:', error));
+    axios
+      .get('/api/jobs/active')
+      .then((response) => {
+        console.log('Jobs API response:', response.data);
+        // Handle both array and object-shaped responses
+        if (Array.isArray(response.data)) {
+          setJobs(response.data);
+        } else if (Array.isArray(response.data.jobs)) {
+          setJobs(response.data.jobs);
+        } else {
+          setJobs([]);
+        }
+      })
+      .catch((error) => console.error('Error fetching jobs:', error));
   }, []);
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -90,10 +102,10 @@ const JobBoard: React.FC = () => {
           </div>
         </div>
 
-        
+        {/* Job List */}
         <div className="space-y-4">
-          {jobs.length > 0 ? (
-            jobs.map((job) => (
+          {filteredJobs.length > 0 ? (
+            filteredJobs.map((job) => (
               <div
                 key={job._id}
                 className="bg-white p-5 rounded-lg shadow border border-gray-200 hover:shadow-md transition-shadow"
@@ -106,7 +118,11 @@ const JobBoard: React.FC = () => {
                     <div className="mt-1 flex items-center text-sm text-gray-500 space-x-2">
                       <span>{job.team}</span>
                       <span>•</span>
-                      <span>{Array.isArray(job.location) ? job.location.join(', ') : job.location}</span>
+                      <span>
+                        {Array.isArray(job.location)
+                          ? job.location.join(', ')
+                          : job.location}
+                      </span>
                     </div>
                   </div>
                   <button
@@ -133,9 +149,6 @@ const JobBoard: React.FC = () => {
                       >
                         View role
                       </button>
-                      {/* <button className="px-4 py-2 text-blue-600 hover:underline">
-                        View role
-                      </button> */}
                     </div>
                   </div>
                 )}
