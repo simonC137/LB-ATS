@@ -252,7 +252,7 @@ router.post('/forgot-password', async (req, res) => {
 
     await admin.save();
 
-    const resetURL = `http://localhost:5173/reset-password/${resetToken}`; 
+    const resetURL = `http://lbats.onthewifi.com/reset-password/${resetToken}`; 
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
