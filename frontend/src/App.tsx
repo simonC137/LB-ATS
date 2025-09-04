@@ -109,11 +109,13 @@ function App() {
 function AppWrapper() {
   return (
     <BrowserRouter>
-      <GoogleReCaptchaProvider
+      {/* <GoogleReCaptchaProvider
+        not possible to add keys for test deployment
         reCaptchaKey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
       >
         <App />
-      </GoogleReCaptchaProvider>
+      </GoogleReCaptchaProvider> */}
+      <App />
     </BrowserRouter>
   );
 }
