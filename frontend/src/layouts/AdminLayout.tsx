@@ -30,9 +30,9 @@ const AdminLayout = () => {
       const { data } = await axios.get('/api/auth/profile', {
         withCredentials: true,
       });
-      console.log(data);
       setAdminName(`${data.first_name}`);
     } catch (error) {
+      // @ts-ignore
       console.error('Failed to fetch admin profile:', error.message);
       setAdminName('Admin');
     }

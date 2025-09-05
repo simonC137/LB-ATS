@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // ✅ add Link
 import axios from 'axios';
 
 import signupImage from '../assets/networkingImage.jpg';
@@ -65,11 +65,20 @@ const AdminLogin = () => {
                   required
                 />
               </label>
+
+              <div className="text-right text-sm">
+                <Link to="/forgot-password" className="text-blue-500 hover:underline">
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             {errorMsg && <p className="text-red-500 mt-2">{errorMsg}</p>}
 
-            <button type="submit" className="mt-4 w-full btn bg-orange-400 hover:bg-orange-500 border-none text-white">
+            <button
+              type="submit"
+              className="mt-4 w-full btn bg-orange-400 hover:bg-orange-500 border-none text-white"
+            >
               Login
             </button>
           </form>

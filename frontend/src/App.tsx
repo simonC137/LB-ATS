@@ -64,34 +64,34 @@ import AddJob from './pages/admin/Add-Job';
 import JobBoard from './components/JobBoard';
 import InactiveJobs from './pages/InactiveJobs';
 import CandidateDashboard from './pages/CandidateDashboard';
-
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import AdminForgotPassword from './pages/admin/ForgotPassword';
+import AdminResetPassword from './pages/admin/AdminResetPassword';
 
 function App() {
   const location = useLocation();
   const excludedRoutes = [
     '/admin',
-    '/admin/dashboard',
-    '/admin/roles',
-    '/admin/profile',
-    '/admin/add-job',
-    '/admin/inactive-jobs',
-    '/admin/candidates'
-
+    '/forgot-password',
+    '/reset-password',
   ];
- 
+
+  const shouldHide = excludedRoutes.some(route => location.pathname.startsWith(route));
 
   return (
     <>
-      {!excludedRoutes.includes(location.pathname) && <Navbar />}
+      {!shouldHide && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="contact" element={<Contact />}></Route>
-        <Route path="/jobDetail/:id" element={<JobDetails />}></Route>
-        <Route path="/blogDetail/:id" element={<BlogDetails />}></Route>
-        <Route path="/admin/" element={<AdminPage />}></Route>
-        <Route path="/jobs/" element={<JobBoard />}></Route>
+        <Route path="/" element={<Home />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="/jobDetail/:id" element={<JobDetails />} />
+        <Route path="/blogDetail/:id" element={<BlogDetails />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/jobs" element={<JobBoard />} />
+        <Route path="/forgot-password" element={<AdminForgotPassword />} />
+        <Route path="/reset-password/:token" element={<AdminResetPassword />} />
 
-        {/* Admin protected routes here */}
+        {/* Admin protected routes */}
         <Route path="/admin/*" element={<AdminLayout />}>
           <Route path="dashboard" element={<DashboardHome />} />
           <Route path="profile" element={<Profile />} />
@@ -99,11 +99,9 @@ function App() {
           <Route path="add-job" element={<AddJob />} />
           <Route path="inactive-jobs" element={<InactiveJobs />} />
           <Route path="candidates" element={<CandidateDashboard />} />
-
-
         </Route>
       </Routes>
-      {!excludedRoutes.includes(location.pathname) && <Footer />}
+      {!shouldHide && <Footer />}
     </>
   );
 }
@@ -111,6 +109,12 @@ function App() {
 function AppWrapper() {
   return (
     <BrowserRouter>
+      {/* <GoogleReCaptchaProvider
+        not possible to add keys for test deployment
+        reCaptchaKey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+      >
+        <App />
+      </GoogleReCaptchaProvider> */}
       <App />
     </BrowserRouter>
   );

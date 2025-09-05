@@ -36,6 +36,7 @@ const CandidateDashboard: React.FC = () => {
       setCandidates(res.data);
     } catch (err: any) {
       setError(err.response?.data?.message || err.message);
+
     } finally {
       setLoading(false);
     }
@@ -54,7 +55,7 @@ const CandidateDashboard: React.FC = () => {
             cancelButtonText: 'Cancel',
           });
           if (!result.isConfirmed) return;
-        await axios.delete('/api/candidates/clean-rejected');
+        await axios.delete('/api/delete/clean-rejected');
         await MySwal.fire({
             icon: 'success',
             title: 'Candidae deleted',
